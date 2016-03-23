@@ -17,10 +17,10 @@ public class ClientObj {
 		// Устанавливаем соединение
 		sock = new Socket(ip, port);
 		System.out.println(sock);
-		// Получаем потоки ввода-вывода
+		// Получаем потоки ввода-вывода		
+		out = new ObjectOutputStream(sock.getOutputStream());		
 		in = new ObjectInputStream(sock.getInputStream());
-		out = new ObjectOutputStream(sock.getOutputStream());
-		System.out.println("after");
+		
 	}
 
 	// отправить запрос серверу и получить ответ
@@ -29,7 +29,7 @@ public class ClientObj {
 		// отправляю запрос
 		Calc calc= new Calc(operation, value1, value2);
 		out.writeObject(calc);
-		System.out.println("to serv "+calc);
+		
 		// получаю ответ
 		Calc resCalc = null;
 		try {
@@ -38,7 +38,7 @@ public class ClientObj {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("from serv "+resCalc);
+		
 		return resCalc.res;
 	}// посчитать сумму чисел
 
@@ -60,7 +60,7 @@ public class ClientObj {
 	public static void main(String[] args) {
 		try {
 			ClientObj client = new ClientObj("localhost", 12345);
-			System.out.println(client);
+			
 			int a = client.sum(15, 20);
 			int b = client.sub(30, 38);
 			int c = client.sum(100, 200);

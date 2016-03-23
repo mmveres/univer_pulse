@@ -21,11 +21,12 @@ public class ServerObj {
 		while (true) {
 			// Принимаем соединение от нового клиента
 			sock = server.accept();
-			System.out.println("accept "+sock);
+			
 			// Получаем потоки ввода-вывода
-			in = new ObjectInputStream(sock.getInputStream());
+			in = new ObjectInputStream(sock.getInputStream());			
+			
 			out = new ObjectOutputStream(sock.getOutputStream());
-			System.out.println("after accept "+sock);
+			
 			// Пока соединение активно, обрабатываем запросы
 			while (processQuery())
 				;
@@ -39,7 +40,7 @@ public class ServerObj {
 			Calc calc=null;
 			try {
 				calc= (Calc)in.readObject();
-				System.out.println(calc);
+				
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -51,7 +52,7 @@ public class ServerObj {
 			// Результат операции
 			calc.res = (oper == 0) ? (v1 + v2) : (v1 - v2);
 			// Отправляю результат клиенту
-			System.out.println(calc);
+			
 			out.writeObject(calc);
 			return true;
 		} catch (IOException e) {
